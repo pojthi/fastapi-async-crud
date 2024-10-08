@@ -1,0 +1,32 @@
+version: '3.9'
+
+volumes:
+  poetry-cache:
+
+services:
+  app:
+    container_name: fastapi-sqlalchemy-dev
+    build:
+      context: .
+      target: dev
+    image: fastapi-sqlalchemy-dev
+    environment:
+      DATABASE_URL: sqlite:////app/db.sqlite
+      LOG_LEVEL: debug
+    volumes:
+      - ./:/app
+      - poetry-cache:/opt/.poetry-cache
+    ports:
+      - "127.0.0.1:${PORT:-8080}:80"
+    command: "/start-reload.sh"
+
+  docs:
+    build:
+      dockerfile: Dockerfile.mkdocs
+      context: .
+    image: fastapi-sqlalchemy-docs
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      - ./:/docs
+    ports:
+      - "127.0.0.1:8000:8000"

@@ -1,0 +1,6 @@
+.env*
+.git*
+.idea
+Dockerfile
+db.sqlite
+docker-compose.yml
