@@ -2,8 +2,8 @@ from sqlmodel import Field, SQLModel
 
 
 class AddressBase(SQLModel):
-    street_nr: str
-    city: str
+    name: str
+    description: str
 
 
 class Address(AddressBase, table=True):
